@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth')->group(function() {
+    Route::get('/', function () {
+        return view('crud.main.index');
+    });
 });
+
