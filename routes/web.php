@@ -10,9 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware('auth')->group(function() {
-    Route::get('/', function () {
-        return view('crud.main.index');
-    });
-});
 
+use Illuminate\Support\Facades\Auth;
+
+Auth::routes();
+Route::middleware('auth:web', 'admin')->group(function() {
+    Route::get('/news', 'Web\NewsController@index')->name('web.index.news');
+    Route::get('/news/{id}', 'Web\NewsController@show')->name('web.show.news');
+    Route::get('/news/create', 'Web\NewsController@create');
+    Route::post('/news', 'Web\NewsController@store')->name('web.store.news');
+    Route::put('/news/{id}', 'Web\NewsController@update')->name('web.put.news');
+    Route::delete('/news/{id}', 'Web\NewsController@destroy')->name('web.destroy.news');
+});
