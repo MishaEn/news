@@ -2,14 +2,12 @@
 @section('content')
     <pre>
     @php
-        $url = 'http://www.kommersant.ru/RSS/corp.xml';
+        $url = 'http://www.ura.ru/export/all.rss';
         $rss = simplexml_load_file($url);
         foreach($rss as $item){
-            echo $item->title;
            foreach($item->item as $value){
-               var_dump($value->title);
+               var_dump($value);
            }
-
         }
     @endphp
         </pre>

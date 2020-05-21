@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\User;
+use App\News;
 use Illuminate\Console\Command;
 
 class NewsParser extends Command
@@ -43,7 +43,12 @@ class NewsParser extends Command
         foreach($rss as $item){
             $this->info($item->title);
             foreach($item->item as $value){
-                $this->info($value->title);
+                var_dump($value);
+                $category = $value->category;
+                $title = $value->title;
+                $link = $value->link;
+
+                $this->info($value);
             }
 
         }
