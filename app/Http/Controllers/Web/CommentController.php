@@ -2,42 +2,35 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Comment;
+use App\News;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\News;
-use App\News as NewsModel;
-use App\RssFeed;
-use App\Http\Resources\News as NewsResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class NewsController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param $news_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index($news_id)
     {
-        $data = [];
-        RssFeed::chunk(2, function ($rss_feeds) use (&$data) {
-            array_push($data, $rss_feeds);
-        });
-        return view('crud.main.index', ['rss_list' => $data]);
+        $news = News::find($news_id);
+        $comment = $news->comments()->where('comment_id', null)->get();
+        //dd($comment);
+        return view('web.comments.main.index', ['news' => $news, 'comments' => $comment]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $user = Auth::user();
-        if($user->can('create')){
-            return view('crud.add.index');
-        };
-
+        //
     }
 
     /**
@@ -55,11 +48,11 @@ class NewsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return view('crud.news.index', ['data' => NewsModel::find($id)]);
+        //
     }
 
     /**

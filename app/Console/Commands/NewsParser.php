@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\News;
+use App\News;use Carbon\Carbon;
+use App\RssFeed;
 use Illuminate\Console\Command;
 
 class NewsParser extends Command
@@ -38,20 +39,31 @@ class NewsParser extends Command
      */
     public function handle()
     {
-        $url = 'http://www.kommersant.ru/RSS/corp.xml';
-        $rss = simplexml_load_file($url);
-        foreach($rss as $item){
-            $this->info($item->title);
-            foreach($item->item as $value){
-                var_dump($value);
-                $category = $value->category;
-                $title = $value->title;
-                $link = $value->link;
+        $rssList = RssFeed::all();
+        foreach($rssList as $rss){
+            $rss_id = $rss->id;
+            $rss_name = $rss->rss_name;
+            $rss_url = $rss->rss_url;
+            $data = simplexml_load_file($rss_url);
+            foreach($data as $item){
+                foreach($item->item as $value){
+                    $news = News::create(
+                        [
+                            'rss_feed_id' => $rss_id,
+                            'author' => $value->author,
+                            'category' => $value->category,
+                            'title' => $value->title,
+                            'description' => $value->description,
+                            'url' => $value->link,
+                            'publication_date' => Carbon::parse($value->pubddate)->format('Y-m-d H:i:s')
+                        ]
+                    );
+                }
 
-                $this->info($value);
             }
-
+            $this->info($rss_name.' - добавлено');
         }
+        $this->info('success');
 
    /*     $headers = ['Name', 'Email'];
 

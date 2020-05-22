@@ -13,12 +13,63 @@
 
 use Illuminate\Support\Facades\Auth;
 
+/*Route::middleware('auth:web')->group(function() {
+
+});*/
+
 Auth::routes();
-Route::middleware('auth:web', 'admin')->group(function() {
-    Route::get('/news', 'Web\NewsController@index')->name('web.index.news');
-    Route::get('/news/{id}', 'Web\NewsController@show')->name('web.show.news');
-    Route::get('/news/create', 'Web\NewsController@create');
-    Route::post('/news', 'Web\NewsController@store')->name('web.store.news');
-    Route::put('/news/{id}', 'Web\NewsController@update')->name('web.put.news');
-    Route::delete('/news/{id}', 'Web\NewsController@destroy')->name('web.destroy.news');
+Route::get('/', function(){
+    return view('web.index');
+})->name('welcome');
+Route::group(['prefix' => 'news'], function(){
+/*------------------------------------------Маршруты дла новостей-----------------------------------------------------------------------*/
+    Route::get('/', 'Web\NewsController@index')->name('web.index.news');
+    Route::get('/{news_id}', 'Web\NewsController@show')->name('web.show.news');
+/*------------------------------------------Маршруты дла комментариев-----------------------------------------------------------------------*/
+    Route::group(['prefix' => '/{news_id}/comments'], function(){
+        Route::get('/', 'Web\CommentController@index')->name('web.index.comments');
+        Route::get('/{comment_id}', 'Web\CommentController@show')->name('web.show.comments');
+        Route::middleware('auth:web')->group(function() {
+            Route::post('/', 'Web\CommentController@store')->name('web.store.comments');
+            Route::delete('/{id}', 'Web\CommentController@destroy')->name('web.destroy.comments');
+        });
+    });
 });
+Route::middleware('auth:web', 'admin')->group(function() {
+    Route::group(['prefix' => 'admin'], function(){
+        Route::group(['prefix' => 'news'], function(){
+/*------------------------------------------Маршруты дла новостей-----------------------------------------------------------------------*/
+            Route::get('/', 'Web\NewsController@index')->name('admin.index.news');
+            Route::get('/{news_id}', 'Web\NewsController@index')->name('admin.show.news');
+            Route::get('/create', 'Web\NewsController@create')->name('admin.create.news');
+            Route::get('/edit', 'Web\NewsController@edit')->name('admin.edit.news');
+            Route::post('/', 'Web\NewsController@store')->name('admin.store.news');
+            Route::put('/{news_id}', 'Web\NewsController@update')->name('admin.update.news');
+            Route::delete('/{news_id}', 'Web\NewsController@destroy')->name('admin.destroy.news');
+/*------------------------------------------Маршруты дла комментариев-----------------------------------------------------------------------*/
+            Route::group(['prefix' => '/{news_id}/comments'], function(){
+                Route::get('/', 'Web\CommentController@index')->name('admin.index.comments');
+                Route::get('/{comment_id}', 'Web\CommentController@index')->name('admin.show.comments');
+                Route::get('/create', 'Web\CommentController@create')->name('admin.create.comments');
+                Route::get('/edit', 'Web\CommentController@edit')->name('admin.edit.comments');
+                Route::post('/', 'Web\CommentController@store')->name('admin.store.comments');
+                Route::put('/{comment_id}', 'Web\CommentController@update')->name('admin.update.comments');
+                Route::delete('/{comment_id}', 'Web\CommentController@destroy')->name('admin.destroy.comments');
+            });
+        });
+/*------------------------------------------Маршруты дла rss лент-----------------------------------------------------------------------*/
+        Route::group(['prefix' => '/rss'], function(){
+            Route::get('/', 'Web\RssFeedController@index')->name('admin.index.rss');
+            Route::get('/{rss_id}', 'Web\RssFeedController@index')->name('admin.show.rss');
+            Route::get('/create', 'Web\RssFeedController@create')->name('admin.create.rss');
+            Route::get('/edit', 'Web\RssFeedController@edit')->name('admin.edit.rss');
+            Route::post('/', 'Web\RssFeedController@store')->name('admin.store.rss');
+            Route::put('/{rss_id}', 'Web\RssFeedController@update')->name('admin.update.rss');
+            Route::delete('/{rss_id}', 'Web\RssFeedController@destroy')->name('admin.destroy.rss');
+        });
+    });
+});
+
+
+
+

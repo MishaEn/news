@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRssFeedTable extends Migration
+class CreateRssFeedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateRssFeedTable extends Migration
      */
     public function up()
     {
-        Schema::create('rss_feed', function (Blueprint $table) {
+        Schema::create('rss_feeds', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('url');
+            $table->string('rss_name');
+            $table->string('rss_url');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateRssFeedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rss_feed');
+        Schema::dropIfExists('rss_feeds');
     }
 }

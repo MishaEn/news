@@ -1,4 +1,4 @@
-@extends('crud.layouts.template')
+@extends('layouts.template')
 @section('content')
     {{$data}}
 @endsection
