@@ -19283,6 +19283,11 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+var like = document.getElementsByClassName('bi-heart-fill');
+like.click(function (event) {
+  console.log('like');
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

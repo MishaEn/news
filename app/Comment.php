@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\User;
+use App\News;
 class Comment extends Model
 {
+    protected $fillable = ['user_id', 'news_id', 'comment_id','description'];
+
     public function news(){
         return $this->belongsTo(News::class);
     }

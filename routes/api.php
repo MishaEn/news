@@ -12,7 +12,10 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::resource('news', 'Api\NewsController');
-/*Route::middleware('auth:api')->group( function () {
+Route::get('/register', 'Api\RegisterController@showRegisterForm');
+Route::post('/register', 'Api\RegisterController@register');
 
-});*/
+
+Route::middleware('auth:api')->group( function () {
+    Route::resource('news', 'Api\NewsController');
+});

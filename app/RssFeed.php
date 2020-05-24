@@ -10,6 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class RssFeed extends Model
 {
     public function news(){
-        return $this->hasMany('App\News');
+        return $this->hasMany(News::class);
     }
 }

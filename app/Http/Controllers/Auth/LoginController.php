@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class LoginController extends Controller
@@ -52,5 +53,12 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return $this->loggedOut($request) ?: redirect('/login');
+    }
+    protected function authenticated(Request $request, $user)
+    {
+        if(Auth::user()->type == 1){
+            return redirect('/admin');
+        }
+        return redirect('/news');
     }
 }

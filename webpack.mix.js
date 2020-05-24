@@ -1,5 +1,9 @@
 const mix = require('laravel-mix');
 
+mix.autoload({
+    jquery: ['$', 'jQuery', 'window.jQuery'],
+});
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management

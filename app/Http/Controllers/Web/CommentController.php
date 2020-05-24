@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Comment;
 use App\News;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -19,8 +21,10 @@ class CommentController extends Controller
     {
         $news = News::find($news_id);
         $comment = $news->comments()->where('comment_id', null)->get();
-        //dd($comment);
-        return view('web.comments.main.index', ['news' => $news, 'comments' => $comment]);
+        if(Auth::user()->type == 1){
+            return view('admin.comments.index.index', ['news' => $news, 'comments' => $comment, 'title' => 'Комментарии']);
+        }
+        return view('web.comments.main.index', ['news' => $news, 'comments' => $comment, 'title' => 'Комментарии']);
     }
 
     /**
@@ -36,12 +40,21 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param $news_id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(Request $request, $news_id)
     {
-        //
+        $user_id = Auth::user()->id;
+        $text =
+        $comment = Comment::create([
+            'user_id' => $user_id,
+            'news_id' => $news_id,
+            'comment_id' => null,
+            'description' => $request->input('comment')
+        ]);
+        return back();
     }
 
     /**
@@ -52,7 +65,7 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
