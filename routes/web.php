@@ -27,15 +27,15 @@ Route::middleware('auth:web', 'admin')->group(function() {
             return view('admin.index', ['title' => 'Админка']);
         })->name('welcome');
         Route::group(['prefix' => 'news'], function(){
-/*------------------------------------------Маршруты дла новостей-----------------------------------------------------------------------*/
+
             Route::get('/', 'Web\NewsController@index')->name('admin.index.news');
-            Route::get('/{news_id}', 'Web\NewsController@show')->name('admin.show.news');
             Route::get('/create', 'Web\NewsController@create')->name('admin.create.news');
+            Route::get('/{news_id}', 'Web\NewsController@show')->name('admin.show.news');
             Route::get('{news_id}/edit', 'Web\NewsController@edit')->name('admin.edit.news');
             Route::post('/', 'Web\NewsController@store')->name('admin.store.news');
             Route::put('/{news_id}', 'Web\NewsController@update')->name('admin.update.news');
             Route::delete('/{news_id}', 'Web\NewsController@destroy')->name('admin.destroy.news');
-/*------------------------------------------Маршруты дла комментариев-----------------------------------------------------------------------*/
+
             Route::group(['prefix' => '/{news_id}/comments'], function(){
                 Route::get('/', 'Web\CommentController@index')->name('admin.index.comments');
                 Route::get('/{comment_id}', 'Web\CommentController@index')->name('admin.show.comments');
@@ -46,11 +46,11 @@ Route::middleware('auth:web', 'admin')->group(function() {
                 Route::delete('/{comment_id}', 'Web\CommentController@destroy')->name('admin.destroy.comments');
             });
         });
-/*------------------------------------------Маршруты дла rss лент-----------------------------------------------------------------------*/
+
         Route::group(['prefix' => '/rss'], function(){
             Route::get('/', 'Web\RssFeedController@index')->name('admin.index.rss');
-            Route::get('/{rss_id}', 'Web\RssFeedController@show')->name('admin.show.rss');
             Route::get('/create', 'Web\RssFeedController@create')->name('admin.create.rss');
+            Route::get('/{rss_id}', 'Web\RssFeedController@show')->name('admin.show.rss');
             Route::get('{rss_id}/edit', 'Web\RssFeedController@edit')->name('admin.edit.rss');
             Route::post('/', 'Web\RssFeedController@store')->name('admin.store.rss');
             Route::put('/{rss_id}', 'Web\RssFeedController@update')->name('admin.update.rss');

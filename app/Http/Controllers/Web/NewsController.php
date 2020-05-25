@@ -8,6 +8,7 @@ use App\Http\Resources\News;
 use App\News as NewsModel;
 use App\RssFeed;
 use App\Http\Resources\News as NewsResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,24 +38,27 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create.index');
+        return view('admin.news.create.index', ['rss_list' => RssFeed::all(), 'title' => 'Добавить новость']);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-       /* $comment = Comment::create([
-            'user_id' => $user_id,
-            'news_id' => $news_id,
-            'comment_id' => null,
-            'description' => $request->input('comment')
+        $news = NewsModel::create([
+            'rss_feed_id' =>  $request->input('rss_id'),
+            'author' =>  $request->input('author'),
+            'category' =>  $request->input('category'),
+            'title' =>  $request->input('title'),
+            'description' =>  $request->input('description'),
+            'url' =>  $request->input('url'),
+            'publication_date' =>  Carbon::parse($request->input('publication_date'))->format('Y-m-d H:i:s')
         ]);
-        return redirect('/admin/news');*/
+        return redirect('/admin/news');
     }
 
     /**

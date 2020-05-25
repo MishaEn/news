@@ -1,14 +1,14 @@
 @extends('layouts.template')
 @section('content')
-    {{--<div class="row">
+    <div class="row">
         <div class="col-6 offset-3">
             <div class="card">
                 <div class="card-header">
                     {{$title}}
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{route('admin.update.rss')}}">
-                        @method('PUT')
+                    <form method="post" action="{{route('admin.store.rss')}}">
+                        @method('POST')
                         @csrf
                         <div class="form-group">
                             <label for="name">Название</label>
@@ -23,5 +23,5 @@
                 </div>
             </div>
         </div>
-    </div>--}}
+    </div>
 @endsection
