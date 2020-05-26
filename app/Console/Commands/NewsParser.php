@@ -48,8 +48,8 @@ class NewsParser extends Command
             foreach($data as $item){
                 foreach($item->item as $value){
 
-                    $this->info(News::findOrFail('title', $value->title));
-                    /*$news = News::create(
+                    //$this->info(News::findOrFail('title', $value->title));
+                    $news = News::create(
                         [
                             'rss_feed_id' => $rss_id,
                             'author' => $value->author,
@@ -59,7 +59,7 @@ class NewsParser extends Command
                             'url' => $value->link,
                             'publication_date' => Carbon::parse($value->pubddate)->format('Y-m-d H:i:s')
                         ]
-                    );*/
+                    );
                 }
 
             }

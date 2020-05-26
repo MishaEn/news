@@ -1,8 +1,7 @@
 require('./bootstrap');
 
-let like = document.getElementsByClassName('bi-heart-fill');
-like.click(function (event) {
-    console.log('like')
+
+var channel = Echo.channel('like-event');
+channel.listen('LikeEvent', (e) => {
+    console.log(e.user);
 });
-
-
