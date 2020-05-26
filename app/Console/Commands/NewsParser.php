@@ -66,11 +66,5 @@ class NewsParser extends Command
             $this->info($rss_name.' - добавлено');
         }
         $this->info('success');
-
-   /*     $headers = ['Name', 'Email'];
-
-        $users = User::all(['name', 'email'])->toArray();
-
-        $this->table($headers, $users);*/
     }
 }
