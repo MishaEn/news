@@ -49,7 +49,7 @@ class CommentController extends Controller
         $comment = Comment::create([
             'user_id' => Auth::user()->id,
             'news_id' => $news_id,
-            'comment_id' => null,
+            'comment_id' =>  $request->input('comment_id'),
             'description' => $request->input('comment')
         ]);
         return back();

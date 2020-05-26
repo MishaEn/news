@@ -6,7 +6,7 @@
                     <small><span class="badge badge-primary"><a style="color: #fff" href="{{ route('web.show.comments', ['news_id' => $news->id, 'comment_id' => $comment->id])}}">#{{ $comment->id }}  </a></span></small>
                 </div>
                 <div class="col-1 text-left p-0">
-                    <small><span class="badge-secondary badge badge-small">{{$comment->user()->get()[0]->name}}</span></small>
+                    <small><span class="badge-secondary badge badge-small">{{$comment->user()->first()->name}}</span></small>
                 </div>
                 <div class="col-3">
                     <small>{{\Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}</small>
@@ -19,7 +19,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <small style="color: #7b7b7b">Ответить</small>
+                    <small style="cursor: pointer;color: #7b7b7b" data-collapsed="true" data-type="comment-response" data-comment="{{$comment->id}}" data-news="{{$news->id}}">Ответить</small>
                 </div>
             </div>
             <hr>

@@ -1,7 +1,7 @@
 require('./bootstrap');
 
 
-var channel = Echo.channel('like-event');
-channel.listen('LikeEvent', (e) => {
-    console.log(e.user);
+var channel = Echo.channel('like');
+channel.listen('.like-event', (e) => {
+    console.log('event');
 });

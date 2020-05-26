@@ -40,9 +40,21 @@
                                             <a href="{{route('web.index.comments', $news->id)}}">{{$news->comments()->count()}} - комментариев</a>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <svg class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" clip-rule="evenodd"/>
-                                            </svg>
+                                            @if(\Illuminate\Support\Facades\Auth::user())
+                                                @if($news->like()->where(['news_id' => $news->id, 'user_id' => \Illuminate\Support\Facades\Auth::user()->id])->first())
+                                                    <i data-like="true" style="color:  #b80b00; cursor: pointer" data-type="like" data-id="{{$news->id}}">
+                                                        Лайк <span data-type="like-count">{{$news->like()->count()}}</span>
+                                                    </i>
+                                                @else
+                                                    <i data-like="false" data-type="like" style="cursor: pointer" data-id="{{$news->id}}">
+                                                        Лайк <span data-type="like-count">{{$news->like()->count()}}</span>
+                                                    </i>
+                                                @endif
+                                            @else
+                                                <i data-like="false" data-type="like" style="cursor: pointer" data-id="{{$news->id}}">
+                                                    Лайк <span data-type="like-count">{{$news->like()->count()}}</span>
+                                                </i>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

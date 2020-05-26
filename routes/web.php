@@ -17,7 +17,12 @@ Route::group(['prefix' => 'news'], function(){
         Route::middleware('auth:web')->group(function() {
             Route::post('/', 'Web\CommentController@store')->name('web.store.comments');
             Route::delete('/{id}', 'Web\CommentController@destroy')->name('web.destroy.comments');
+
         });
+    });
+    Route::middleware('auth:web')->group(function() {
+        Route::post('/like', 'Web\LikeController@store')->name('web.store.like');
+        Route::delete('/like/{like_id}', 'Web\LikeController@destroy')->name('web.destroy.like');
     });
 });
 Route::middleware('auth:web', 'admin')->group(function() {

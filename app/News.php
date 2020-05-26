@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @method static where(string $string, $id)
@@ -22,7 +23,8 @@ class News extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
-    public function like(){
+    public function like()
+    {
         return $this->hasMany(Like::class);
     }
 }

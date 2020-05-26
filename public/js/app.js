@@ -36192,9 +36192,9 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var channel = Echo.channel('like-event');
-channel.listen('LikeEvent', function (e) {
-  console.log(e.user);
+var channel = Echo.channel('like');
+channel.listen('.like-event', function (e) {
+  console.log('event');
 });
 
 /***/ }),
@@ -36228,7 +36228,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "9c920a2da2f21dfac21f",
+  key: "918056b9c09851b74546",
   cluster: "eu",
   forceTLS: true
 });

@@ -28,7 +28,7 @@ class NewsController extends Controller
         if(Auth::user() and Auth::user()->type==1){
             return view('admin.news.index.index', ['rss_list' => $data, 'title' => 'Новостной фид']);
         }
-        return view('web.news.index', ['rss_list' => $data, 'title' => 'Новостной фид']);
+        return view('web.news.index.index', ['rss_list' => $data, 'title' => 'Новостной фид']);
     }
 
     /**
@@ -70,7 +70,10 @@ class NewsController extends Controller
     public function show($id)
     {
         $news = NewsModel::find($id);
-        return view('admin.news.show.index', ['news' => $news, 'title' => $news->title]);
+        if(Auth::user() and Auth::user()->type==1){
+            return view('admin.news.show.index', ['news' => $news, 'title' => $news->title]);
+        }
+        return view('web.news.show.index',  ['news' => $news, 'title' => $news->title]);
     }
 
     /**

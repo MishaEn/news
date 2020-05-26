@@ -14,10 +14,8 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-Broadcast::channel('like-event', function ($user, $news, $message){
+Broadcast::channel('like', function ($like){
     return [
-        'user' => $user,
-        'news' => $news,
-        'message' => $message
+        'like' => $like
     ];
 });

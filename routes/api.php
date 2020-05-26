@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 Route::get('/register', 'Api\RegisterController@showRegisterForm');
 Route::post('/register', 'Api\RegisterController@register');
 
-
+Route::resource('news', 'Api\NewsController');
 Route::middleware('auth:api')->group( function () {
-    Route::resource('news', 'Api\NewsController');
+
 });

@@ -8,6 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{$title}}</title>
     <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <script src="{{asset('js/script.js')}}"></script>
     <script src="{{ mix('js/app.js') }}"></script>
 </head>
 <body>

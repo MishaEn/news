@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Events\LikeEvent;
+use App\Like as LikeModel;
 use Illuminate\Console\Command;
-use App\User;
-use App\Like;
-use App\News;
-class LikeNews extends Command
+
+class Like extends Command
 {
     /**
      * The name and signature of the console command.
@@ -39,14 +39,10 @@ class LikeNews extends Command
      */
     public function handle()
     {
-        // Вызов события, пока просто выбирая первого пользователя
-        $user = User::find(1);
-        $news = News::find(1);
-        $message = Like::create([
-            'user_id' => $user->id,
-            'news_id' => $news->id
+        $like = LikeModel::create([
+            'user_id' => 1,
+            'news_id' => 1,
         ]);
-
-        event(new \App\Events\LikeEvent($news, $user, $message));
+        event(new LikeEvent($like));
     }
 }
